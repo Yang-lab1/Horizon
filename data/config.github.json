@@ -166,5 +166,9 @@
       }
     },
     "headers": ""
-  }
+  },
+  "languages": [
+    "en",
+    "zh"
+  ]
 }
