@@ -2,7 +2,7 @@ name: Daily Horizon Summary
 
 on:
   schedule:
-    - cron: '0 22 * * *'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -36,10 +36,10 @@ jobs:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           LWN_KEY: ${{ secrets.LWN_KEY }}
           HORIZON_WEBHOOK_URL: ${{ secrets.HORIZON_WEBHOOK_URL }}
-        run: uv run horizon --hours 48
+        run: uv run horizon --hours 2
 
       - name: Set current date as environment variable
-        run: echo "DATE=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+        run: echo "DATE=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -47,6 +47,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
           keep_files: true
-          commit_message: "Daily Summary: ${{ env.DATE }}"
+          commit_message: "Horizon Update: ${{ env.DATE }}"
           publish_branch: gh-pages
           enable_jekyll: true
